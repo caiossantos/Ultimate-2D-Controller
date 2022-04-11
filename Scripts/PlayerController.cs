@@ -29,7 +29,7 @@ namespace TarodevController {
         
         private void Update() {
             if(!_active) return;
-            // Calculate velocity
+            // Calculate velocity used in jump
             Velocity = (transform.position - _lastPosition) / Time.deltaTime;
             _lastPosition = transform.position;
 
@@ -54,7 +54,7 @@ namespace TarodevController {
                 X = UnityEngine.Input.GetAxisRaw("Horizontal")
             };
             if (Input.JumpDown) {
-                _lastJumpPressed = Time.time;
+                _lastJumpPressed = Time.time;   //capture the jump pressed time and saves into a float variable
             }
         }
 
@@ -178,10 +178,11 @@ namespace TarodevController {
 
         #region Gravity
 
-        [Header("GRAVITY")] [SerializeField] private float _fallClamp = -40f;
+        [Header("GRAVITY")] 
+        private float _fallSpeed;
+        [SerializeField] private float _fallClamp = -40f;
         [SerializeField] private float _minFallSpeed = 80f;
         [SerializeField] private float _maxFallSpeed = 120f;
-        private float _fallSpeed;
 
         private void CalculateGravity() {
             if (_colDown) {
